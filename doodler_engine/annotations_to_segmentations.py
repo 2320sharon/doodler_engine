@@ -295,12 +295,12 @@ def fromhex(n):
 
 ##========================================================
 def label_to_colors(
-    img,
-    mask,
-    alpha,
-    colormap,
-    color_class_offset,
-    do_alpha,
+    img : 'numpy.ndarray',
+    mask : list[bool],
+    alpha : int,
+    colormap : list,
+    color_class_offset : int,
+    do_alpha : bool,
 ):
     """
     Take MxN matrix containing integers representing labels and return an MxNx4
@@ -335,7 +335,7 @@ def label_to_colors(
         return cimg
 
 ##========================================================
-def check_sanity(result,mask):
+def check_sanity(result : 'numpy.ndarray',mask  : 'numpy.ndarray'):
     """
     checks the sanity of a doodler engine output
     Inputs: 1. result (label image output of segmentation() from doodler-engine)

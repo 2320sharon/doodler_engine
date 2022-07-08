@@ -133,7 +133,7 @@ def crf_refine(label,
 
     logging.info('CRF downsample factor: %f' % (crf_downsample_factor))
     logging.info('CRF theta parameter: %f' % (crf_theta_slider_value))
-    logging.info('CRF mu parameter: %f' % (crf_mu_slider_value))
+    logging.info('CRF mu parameter: %f',crf_mu_slider_value)
 
     # decimate by factor by taking only every other row and column
     img = img[::crf_downsample_factor,::crf_downsample_factor, :]
@@ -447,18 +447,19 @@ def do_classify(img,mask,n_sigmas,multichannel,intensity,edges,texture,sigma_min
 
 # ##========================================================
 def segmentation(
-    img, mask,
-    crf_theta_slider_value,
-    crf_mu_slider_value,
-    rf_downsample_value,
-    crf_downsample_factor,
-    n_sigmas,
-    multichannel,#=True,
-    intensity,#=True,
-    edges,#=True,
-    texture,#=True,
-    sigma_min,#=0.5,
-    sigma_max,#=16,
+    img : 'numpy.ndarray',
+    mask : 'numpy.ndarray',
+    crf_theta_slider_value : int ,
+    crf_mu_slider_value : int ,
+    rf_downsample_value : int,
+    crf_downsample_factor : int ,
+    n_sigmas : int,
+    multichannel : bool,#=True,
+    intensity : bool,#=True,
+    edges : bool,#=True,
+    texture : bool,#=True,
+    sigma_min : float,#=0.5,
+    sigma_max : int,#=16,
 ):
     """
     1) Calls do_classify to apply classifier to features to extract unary potentials for the CRF
@@ -512,7 +513,7 @@ def segmentation(
         logging.info('CRF model applied with theta=%f and mu=%f' % ( crf_theta_slider_value, crf_mu_slider_value))
         logging.info('percent RAM usage: %f' % (psutil.virtual_memory()[2]))
 
-        if ((n==1)):
+        if (n==1):
             result2[result>0] = np.unique(result)
 
         result2 = result2.astype('float')
@@ -524,7 +525,5 @@ def segmentation(
 
         logging.info('Spatially filtered values inpainted')
         logging.info('percent RAM usage: %f' % (psutil.virtual_memory()[2]))
-
+        logging.info('segmentation result2: %f' % (result2))
     return result2
-
-
