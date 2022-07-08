@@ -55,7 +55,7 @@ def show_segmentation(image_path,
     crf_downsample_factor,
     null,
     my_id_value,
-    n_sigmas,
+    n_sigmas : int,
     multichannel,
     intensity,
     edges,
@@ -378,20 +378,20 @@ def check_sanity(result : 'numpy.ndarray',mask  : 'numpy.ndarray'):
 ##========================================================
 def compute_segmentations(
     shapes,
-    crf_theta_slider_value,
-    crf_mu_slider_value,
-    rf_downsample_value,
-    crf_downsample_factor,
-    n_sigmas,
-    multichannel,
-    intensity,
-    edges,
-    texture,
-    sigma_min,
-    sigma_max,
-    img_path="assets/logos/dash-default.jpg",
+    crf_theta_slider_value : int,
+    crf_mu_slider_value : int,
+    rf_downsample_value : int,
+    crf_downsample_factor : int,
+    n_sigmas : int,
+    multichannel : bool,
+    intensity : bool,
+    edges : bool,
+    texture : bool,
+    sigma_min : float,
+    sigma_max : float,
+    img_path : str = "assets/logos/dash-default.jpg",
     shape_layers=None,
-    label_to_colors_args={},
+    label_to_colors_args : dict ={},
     ):
     """
     segments the image based on the user annotations
@@ -443,7 +443,7 @@ def compute_segmentations(
 
 
 ##========================================================
-def seg_pil(img, classr, do_alpha=False):
+def seg_pil(img, classr, do_alpha : bool = False):
     """ convert numpy array into PIL Image object """
     classr = np.array(classr)
     classr = skimage.util.img_as_ubyte(classr)
