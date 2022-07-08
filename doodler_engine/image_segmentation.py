@@ -285,14 +285,14 @@ def extract_features_2d(
 
 ##========================================================
 def extract_features(
-    img,
-    n_sigmas,
-    multichannel=True,
-    intensity=True,
-    edges=True,
-    texture=True,
-    sigma_min=0.5,
-    sigma_max=16,
+    img :np.ndarray,
+    n_sigmas : int,
+    multichannel : bool = True,
+    intensity : bool =True,
+    edges : bool =True,
+    texture : bool =True,
+    sigma_min : float = 0.5,
+    sigma_max : float = 16,
 ):
     """Features for a single- or multi-channel image.
     """
@@ -354,7 +354,16 @@ def memmap_feats(features):
     return features
 
 ##========================================================
-def do_classify(img,mask,n_sigmas,multichannel,intensity,edges,texture,sigma_min,sigma_max, downsample_value):
+def do_classify(img,
+                mask,
+                n_sigmas : int,
+                multichannel : bool,
+                intensity : bool,
+                edges : bool,
+                texture : bool,
+                sigma_min : float,
+                sigma_max : float,
+                downsample_value):
     """
     Apply classifier to features to extract unary potentials for the CRF
     """
@@ -447,8 +456,8 @@ def do_classify(img,mask,n_sigmas,multichannel,intensity,edges,texture,sigma_min
 
 # ##========================================================
 def segmentation(
-    img : 'numpy.ndarray',
-    mask : 'numpy.ndarray',
+    img : np.ndarray,
+    mask : np.ndarray,
     crf_theta_slider_value : int ,
     crf_mu_slider_value : int ,
     rf_downsample_value : int,
@@ -460,15 +469,33 @@ def segmentation(
     texture : bool,#=True,
     sigma_min : float,#=0.5,
     sigma_max : int,#=16,
-):
-    """
+) -> np.ndarray:
+    """segmentation 
+
     1) Calls do_classify to apply classifier to features to extract unary potentials for the CRF
     then
     2) Calls the spatial filter
     Then
     3) Calls crf_refine to apply CRF
-    """
 
+    Args:
+        img (numpy.ndarray): _description_
+        mask (numpy.ndarray): _description_
+        crf_theta_slider_value (int): _description_
+        crf_mu_slider_value (int): _description_
+        rf_downsample_value (int): _description_
+        crf_downsample_factor (int): _description_
+        n_sigmas (int): _description_
+        multichannel (bool): _description_
+        intensity (bool): _description_
+        edges (bool): _description_
+        texture (bool): _description_
+        sigma_min (float): _description_
+        sigma_max (int): _description_
+
+    Returns:
+        np.ndarray: MxN matrix containing int representing labels for each pixel 
+    """
     # #standardization using adjusted standard deviation
     img = standardize(img)
 
@@ -525,5 +552,4 @@ def segmentation(
 
         logging.info('Spatially filtered values inpainted')
         logging.info('percent RAM usage: %f' % (psutil.virtual_memory()[2]))
-        logging.info('segmentation result2: %f' % (result2))
     return result2
