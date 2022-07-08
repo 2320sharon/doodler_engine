@@ -28,6 +28,7 @@
 ## ``````````````````````````` imports
 ##========================================================
 
+from typing import List
 import numpy as np
 import PIL.Image, skimage.util, skimage.io, skimage.color
 from PIL import ExifTags
@@ -296,9 +297,9 @@ def fromhex(n:str) -> int:
 ##========================================================
 def label_to_colors(
     img : 'numpy.ndarray',
-    mask : list[int],
+    mask : List[int],
     alpha : int,
-    colormap : list[str],
+    colormap : List[str],
     color_class_offset : int,
     do_alpha : bool,
 ):
@@ -312,7 +313,7 @@ def label_to_colors(
     ----------
     img : 'numpy.ndarray'
         MxN matrix containing integers representing labels
-    mask : list[bool]
+    mask : List[bool]
         MxN matrix containing True values where pixel value is 0
     alpha : int
         value of the 4th channel
