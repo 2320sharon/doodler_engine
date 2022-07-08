@@ -289,28 +289,49 @@ def img_to_ubyte_array(img):
     return ret
 
 ##========================================================
-def fromhex(n):
-    """ hexadecimal to integer """
+def fromhex(n:str) -> int:
+    """ Convert hexadecimal to integer """
     return int(n, base=16)
 
 ##========================================================
 def label_to_colors(
     img : 'numpy.ndarray',
-    mask : list[bool],
+    mask : list[int],
     alpha : int,
-    colormap : list,
+    colormap : list[str],
     color_class_offset : int,
     do_alpha : bool,
 ):
     """
+    @TODO REMOVE color_class_offset
+    
     Take MxN matrix containing integers representing labels and return an MxNx4
     matrix where each label has been replaced by a color looked up in colormap.
-    colormap entries must be strings like plotly.express style colormaps.
-    alpha is the value of the 4th channel
-    color_class_offset allows adding a value to the color class index to force
+
+    Parameters
+    ----------
+    img : 'numpy.ndarray'
+        MxN matrix containing integers representing labels
+    mask : list[bool]
+        MxN matrix containing True values where pixel value is 0
+    alpha : int
+        value of the 4th channel
+    colormap : list[str]
+        strings representing hex values of label colors.
+        NOTE: strings must be plotly.express style colormaps
+    @TODO REMOVE color_class_offset
+    color_class_offset : int
+        color_class_offset allows adding a value to the color class index to force
     use of a particular range of colors in the colormap. This is useful for
     example if 0 means 'no class' but we want the color of class 1 to be
     colormap[0].
+    do_alpha : bool
+        If True use alpha
+
+    Returns
+    -------
+    'numpy.ndarray'
+        MxNx4 matrix where each label has been replaced by a color in the colormap
     """
 
     colormap = [
